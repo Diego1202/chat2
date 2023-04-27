@@ -1,0 +1,43 @@
+{% extends 'usuario/base.html' %}
+
+{% block title %}Cambiar Contraseña{% endblock title %}
+
+{% block content %}
+<form method="post" class="row g-3 needs-validation p-md-5 m-5">
+<h2 class="text-center mb-3">Cambiar contraseña</h2>
+  {% csrf_token %}
+  <div class="mb-3 col-12">
+    <label for="username" class="form-label">Contraseña (actual):</label>
+    {{ form.old_password }}
+    {% if form.errors.get_json_data.old_password %}
+    <div class="invalid-feedback">
+      {% for errors in form.errors.get_json_data.old_password %}
+      {{ errors.message }}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+  </div>
+  <div class="mb-3 col-md-6">
+    <label for="username" class="form-label">Nueva contraseña:</label>
+    {{ form.new_password1 }}
+  </div>
+  <div class="mb-3 col-md-6">
+    <label for="username" class="form-label">Nueva contraseña (confirmacion):</label>
+    {{ form.new_password2 }}
+  </div>
+  <div class="mb-3 col-md-12 errores">
+    {% if form.errors.get_json_data.new_password2 %}
+    <div class="invalid-feedback">
+      {% for errors in form.errors.get_json_data.new_password2 %}
+      - {{ errors.message }} <br>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  <div class="d-grid gap-2 col-6 mx-auto">
+    <button type="submit" class="btn btn-success" id="button">Cambiar contraseña</button>
+</div>
+  
+</form>
+{% endblock %}

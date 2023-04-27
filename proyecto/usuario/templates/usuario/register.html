@@ -1,0 +1,66 @@
+{% extends 'usuario/base.html' %}
+
+{% block title %}Formulario de Registro{% endblock title %}
+
+{% block content %}
+<form action="{% url 'register' %}" method="post" class="row g-3 needs-validation p-md-5 ms-5 me-5">
+<h2 class="text-center">Formulario de Registro</h2>
+    {% csrf_token %}
+    <div class="mb-3 col-md-4">
+        <label for="username" class="form-label">Username:</label>
+        {{ form.username }}
+        {% if form.errors.get_json_data.username %}
+                <div class="invalid-feedback">
+                    {% for errors in form.errors.get_json_data.username %}
+                    {{ errors.message }}
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+    </div>
+
+    <div class="mb-3 col-md-4">
+        <label for="username" class="form-label">Nombre:</label>
+        {{ form.first_name }}
+    </div>
+
+    <div class="mb-3 col-md-4">
+        <label for="username" class="form-label">Apellido:</label>
+        {{ form.last_name }}
+    </div>
+
+    <div class="mb-3">
+        <label for="username" class="form-label">Correo:</label>
+        {{ form.email }}
+        {% if form.errors.get_json_data.email %}
+                <div class="invalid-feedback">
+                    {% for errors in form.errors.get_json_data.email %}
+                    {{ errors.message }}
+                {% endfor %}
+            </div>
+            {% endif %}
+    </div>
+        <div class="mb-md-3 col-md-6">
+            <label for="password1" class="form-label">Password:</label>
+            {{ form.password1 }}
+        </div>
+    
+        <div class="col-md-6">
+            <label for="password2" class="form-label">Password (confirmation):</label>
+            {{ form.password2 }}
+        </div>
+        <div class="mb-3 col-12">
+            {% if form.errors.get_json_data.password2 %}
+                <div class="invalid-feedback">
+                    {% for errors in form.errors.get_json_data.password2 %}
+                    - {{ errors.message }} <br>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    
+
+    <button type="submit" class="btn btn-success"id="button">Registrarse</button>
+
+</form>
+{% endblock content %}

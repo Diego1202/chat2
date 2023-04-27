@@ -1,0 +1,18 @@
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="border: none">
+            <h5 class="modal-title">Cerrar la sesion</h5>
+        </div>
+        <div class="modal-body">
+            ¿Está seguro que desea cerrar la sesión?
+            
+        </div>
+        <div class="modal-footer" style="border: none">
+            <button  type="button" class="btn btn-outline-secondary me-3" data-bs-dismiss="modal"><i class="bi bi-x-circle"></i>&nbsp;Cancelar</button>
+            <a href="{% url 'logout' %}" role="button" class="btn btn-primary" id="button"><i class="bi bi-check2-circle"></i>&nbsp; Aceptar</a>
+            </div>
+      </div>
+    </div>
+  </div>

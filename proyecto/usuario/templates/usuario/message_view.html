@@ -1,0 +1,76 @@
+{% extends 'usuario/chat.html' %}
+
+{% block title %}Chat con {{ request.resolver_match.kwargs.username|title }}{% endblock title %}
+
+{% block mensaje %}
+<h2>Chat con {{ request.resolver_match.kwargs.username|title }}</h2>
+<div class="row chat-messages bg-white">
+    <div class="col-12">
+        <div id="message-container">
+            <!-- Agrega esta sección de loader -->
+            <div class="loader-container">
+                <div id="loader">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form class="row chat-form" method="post">
+    {% csrf_token %}
+    <div class="col-md-10 col-9">
+        <input name="content" type="text" id="content" class="form-control" placeholder="Escribe tu mensaje" />
+    </div>
+    <div class="col-md-2 col-3 enviar">
+        <button class="btn btn-primary btn-block" id="button"><i class="bi bi-send"></i></button>
+    </div>
+</form>
+
+{% endblock mensaje %}
+{% block js %}
+<script>
+    // Completa el código de JavaScript que recibe información de la siguiente vista
+    // para actualizar el contenedor de mensajes cada 2 segundos
+    $("#loader").show();
+    setInterval(function () {
+        $("#loader").hide();
+        // Realiza una petición GET a la vista "message_json" con el nombre de usuario del destinatario
+        $.get("{% url 'chatJson' request.resolver_match.kwargs.username %}", function (data) {
+            // Vacía el contenedor de mensajes y agrega los mensajes actualizados
+            $("#message-container").empty();
+            for (var i = 0; i < data.length; i++) {
+                var message = data[i];
+                var messageHtml = "";
+                if (message.sender === "{{ request.user.username }}") {
+                    messageHtml += '<span class="span"><div class="position-relative imagen "><span class="mensaje-enviado">' + message.content + ' ';
+                    if (message.is_read) {
+                        messageHtml += '<div class="feedback-leido"> Leído a ' + message.read_at + '&nbsp;<i class="bi bi-check2-circle leido"></i></div>';
+                    } else {
+                        messageHtml += '<div class="feedback-enviado"> Enviado a ' + message.timestamp + '</div>';
+                    }
+                    messageHtml += '</span>&nbsp;&nbsp;<img src="https://www.hotelbooqi.com/wp-content/uploads/2021/12/128-1280406_view-user-icon-png-user-circle-icon-png.png" alt="Logo" class="d-inline-block align-text-top">';
+                    if (message.is_online) {
+                        messageHtml += '<span class="espacio"></span>&nbsp;';
+                    } else {
+                        messageHtml += '<span class="espacio"></span>&nbsp;';
+                    }
+                } else {
+                    messageHtml += '<span class="span-emisor"><div class="position-relative imagen2"><img src="https://www.hotelbooqi.com/wp-content/uploads/2021/12/128-1280406_view-user-icon-png-user-circle-icon-png.png" alt="Logo" class="d-inline-block align-text-top">';
+                    if (message.is_online) {
+                        messageHtml += '<span class="espacio"></span>&nbsp;';
+                    } else {
+                        messageHtml += '<span class="espacio"></span>&nbsp;';
+                    }
+                    messageHtml += '<span class="mensaje-recibido">' + message.content + '</span></div></span>';
+                }
+                // Agrega el mensaje HTML al contenedor de mensajes
+                $("#message-container").append(messageHtml);
+            }
+            // Oculta el loader después de cargar los mensajes
+
+        });
+    }, 800);
+
+</script>
+{% endblock js %}

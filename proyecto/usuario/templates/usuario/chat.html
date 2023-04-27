@@ -1,0 +1,43 @@
+{% extends 'usuario/base.html' %}
+
+{% block title %}Chats{% endblock title %}
+{% load humanize %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-lg-2 sidebar">
+            <header class="header-chat">
+                <div>
+                    <h3 class="p-3 text-center">Usuarios</h3>
+                </div>
+            </header>
+
+            {% for profile in all_profiles %}
+            <a class="btn btn-link position-relative {% if request.resolver_match.kwargs.username == profile.user.username %} active-chat{% endif %} imagen" href="{% url 'chat-user' profile.user.username %} ">
+                <div class="left-content">
+                    <img src="https://www.hotelbooqi.com/wp-content/uploads/2021/12/128-1280406_view-user-icon-png-user-circle-icon-png.png"
+                        alt="Logo" class="d-inline-block align-text-top">
+                    {% if profile.is_online %}
+                    <span class="activo"></span>&nbsp;&nbsp;{{ profile.user.username|title }}
+                    {% else %}
+                    &nbsp;{{ profile.user.username|title }}
+                    {% endif %}
+                </div>
+                <div class="right-content">
+                    {% if not profile.is_online %}
+                    <span class="inactivo">Activo {{ profile.last_logout|naturaltime }}</span>
+                    {% endif %}
+                </div>
+            </a>
+            
+            {% endfor %}
+        </div>
+        <div class="col-md-9 col-lg-10 chat-container">
+            {% block mensaje %}
+            {% endblock mensaje %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

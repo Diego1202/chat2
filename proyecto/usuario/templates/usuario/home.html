@@ -1,0 +1,9 @@
+{% extends 'usuario/base.html' %}
+
+{% block title %}Inicio{% endblock title %}
+
+{% block content %}
+{% if request.user.is_authenticated %}
+<h1 class="text-center mt-3">Bienvenido - {{ request.user.username|title }}</h1>
+{% endif %}
+{% endblock content %}
