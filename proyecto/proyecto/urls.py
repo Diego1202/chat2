@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from usuario import views, context_processors
 
+handler404 = 'usuario.views.error_404'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
@@ -25,8 +27,8 @@ urlpatterns = [
     path('auth/logout/', views.logout.as_view(), name='logout'),
     path('auth/user/update/', views.profile_update, name='update'),
     path('chat/', views.chat, name='chat'),
+    path('json/perfiles/', context_processors.profiles_with_messages, name='profile_messages'),
     path('chat/<str:username>/', views.message_view, name='chat-user'),
     path('json/<str:username>/', views.message_json, name='chatJson'),
     path('auth/pasword-change/', views.change_password, name='password_change'),
-    path('json/perfiles/', context_processors.profiles_with_messages, name='profile_messages'),
 ]

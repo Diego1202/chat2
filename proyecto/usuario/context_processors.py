@@ -29,8 +29,11 @@ def profiles_with_messages(request):
     return JsonResponse({'profiles': profiles_data})
 
 def tiempo_transcurrido(fecha):
+    if fecha is None:
+        return _("Activo nunca")
+
     ahora = timezone.now()
-    diferencia = ahora - fecha
+    diferencia = (ahora - fecha)
     if diferencia <= timedelta(minutes=1):
         return _("Activo hace unos segundos")
     elif diferencia <= timedelta(hours=1):
