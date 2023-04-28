@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from usuario import views
+from usuario import views, context_processors
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,4 +28,5 @@ urlpatterns = [
     path('chat/<str:username>/', views.message_view, name='chat-user'),
     path('json/<str:username>/', views.message_json, name='chatJson'),
     path('auth/pasword-change/', views.change_password, name='password_change'),
+    path('profile_messages/', context_processors.profiles_with_messages, name='profile_messages'),
 ]

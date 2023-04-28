@@ -11,26 +11,9 @@
                     <h3 class="p-3 text-center">Usuarios</h3>
                 </div>
             </header>
-
-            {% for profile in all_profiles %}
-            <a class="btn btn-link position-relative {% if request.resolver_match.kwargs.username == profile.user.username %} active-chat{% endif %} imagen" href="{% url 'chat-user' profile.user.username %} ">
-                <div class="left-content">
-                    <img src="https://www.hotelbooqi.com/wp-content/uploads/2021/12/128-1280406_view-user-icon-png-user-circle-icon-png.png"
-                        alt="Logo" class="d-inline-block align-text-top">
-                    {% if profile.is_online %}
-                    <span class="activo"></span>&nbsp;&nbsp;{{ profile.user.username|title }}
-                    {% else %}
-                    &nbsp;{{ profile.user.username|title }}
-                    {% endif %}
-                </div>
-                <div class="right-content">
-                    {% if not profile.is_online %}
-                    <span class="inactivo">Activo {{ profile.last_logout|naturaltime }}</span>
-                    {% endif %}
-                </div>
-            </a>
+            <div id="profiles-container"></div>
             
-            {% endfor %}
+            
         </div>
         <div class="col-md-9 col-lg-10 chat-container">
             {% block mensaje %}
@@ -38,6 +21,54 @@
         </div>
     </div>
 </div>
-
-
 {% endblock %}
+
+{% block js %}
+<script>
+    function updateProfiles() {
+        $.ajax({
+            url: '/profile_messages/',
+            dataType: 'json',
+            success: function (data) {
+                var profiles = data.profiles;
+                var html = '';
+                for (var i = 0; i < profiles.length; i++) {
+                    var profile = profiles[i];
+                    var username = profile.username;
+                    html += '<a class="btn btn-link position-relative ';
+                    if ('{{request.resolver_match.kwargs.username}}' === username){
+                        html += 'active-chat ';
+                    }
+                    html += 'imagen3" id="imagen3" href="{% url "chat" %}'+profile.username;
+                    html += '"><div class="left-content">';
+                    html += '<img src="https://www.hotelbooqi.com/wp-content/uploads/2021/12/128-1280406_view-user-icon-png-user-circle-icon-png.png" alt="Logo" class="d-inline-block align-text-top">';
+                    if (profile.is_online) {
+                        html += '<span class="activo"></span>&nbsp;&nbsp;'+profile.username;
+                    } else {
+                        html += '&nbsp;' +profile.username;
+                    }
+                    html += '</div>';
+                    html += '<div class="right-content">';
+                    if (!profile.is_online) {
+                        html += '<span class="inactivo">'+profile.last_logout;
+                        html += '</span>';
+                    }
+                    if (profile.has_unread_messages) {
+                        html += '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">'+profile.count+'</span>';
+                    }
+                    html += '</div>';
+                    html += '</a>';
+                }
+                $('#profiles-container').html(html);
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        updateProfiles();
+        setInterval(updateProfiles, 2000);
+    });
+</script>
+{% endblock js %}
