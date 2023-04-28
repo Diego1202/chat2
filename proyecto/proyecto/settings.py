@@ -26,6 +26,10 @@ SECRET_KEY = 'django-insecure-!b%!=#y%)az=jd+#_v3@pcnum6nt8=^fm(-_ys(g$k^$t%k@00
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+#DEBUG = False
+
+#ALLOWED_HOSTS = ['chat2.pythonanywhere.com', 'localhost', '127.0.0.1']
+
 ALLOWED_HOSTS = []
 
 
