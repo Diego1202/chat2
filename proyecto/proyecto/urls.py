@@ -28,5 +28,5 @@ urlpatterns = [
     path('chat/<str:username>/', views.message_view, name='chat-user'),
     path('json/<str:username>/', views.message_json, name='chatJson'),
     path('auth/pasword-change/', views.change_password, name='password_change'),
-    path('profile_messages/', context_processors.profiles_with_messages, name='profile_messages'),
+    path('json/perfiles/', context_processors.profiles_with_messages, name='profile_messages'),
 ]

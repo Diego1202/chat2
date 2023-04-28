@@ -5,6 +5,14 @@ from django.utils.timesince import timesince
 from datetime import timedelta
 from django.utils import timezone
 
+
+def all_profiles(request):
+    if request.user.is_authenticated:
+        profile = Profile.objects.exclude(user=request.user)
+    else:
+        profile = Profile.objects.all()
+    return  {'all_profiles': profile}
+
 def profiles_with_messages(request):
     profiles = Profile.objects.all()
     profiles_data = []

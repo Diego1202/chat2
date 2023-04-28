@@ -13,11 +13,7 @@ from django.http import JsonResponse
 
 # Create your views here.
 def home(request):
-    if request.user.is_authenticated:
-        profile = Profile.objects.exclude(user=request.user)
-    else:
-        profile = Profile.objects.all()
-    return render(request, "usuario/home.html", { 'profiles': profile})
+    return render(request, "usuario/home.html")
 
 def register(request):
     if request.method == 'POST':

@@ -27,7 +27,7 @@
 <script>
     function updateProfiles() {
         $.ajax({
-            url: '/profile_messages/',
+            url: '/json/perfiles/',
             dataType: 'json',
             success: function (data) {
                 var profiles = data.profiles;
