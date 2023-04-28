@@ -1,43 +1,49 @@
+from usuario.models import Profile
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.forms import PasswordChangeForm
+
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'type' : "text",
-                'id' : "username",
-                'placeholder' : "Nombre Usuario"
+                'type': "text",
+                'id': "username",
+                'placeholder': "Nombre Usuario",
+                'autocomplete': "off"
             }
         )
     )
 
     password = forms.CharField(
-            widget=forms.TextInput(
-                attrs={
-                    'class': 'form-control',
-                    'type' : "password",
-                    'id' : "password1",
-                    'placeholder' : "Contraseña"
-                }
-            )
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'type': "password",
+                'id': "password1",
+                'placeholder': "Contraseña",
+                'autocomplete': "off"
+            }
         )
+    )
 
     class Meta:
-        model=User
+        model = User
         field = ["username", "password"]
+
 
 class UserCreationForm(UserCreationForm):
     username = forms.CharField(
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'type' : "text",
-                'id' : "username",
-                'placeholder' : "Nombre Usuario"
+                'type': "text",
+                'id': "username",
+                'placeholder': "Nombre Usuario",
+                'autocomplete': "off"
             }
         )
     )
@@ -46,9 +52,10 @@ class UserCreationForm(UserCreationForm):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'type' : "text",
-                'id' : "first_name",
-                'placeholder' : "Nombre"
+                'type': "text",
+                'id': "first_name",
+                'placeholder': "Nombre",
+                'autocomplete': "off"
             }
         )
     )
@@ -57,9 +64,10 @@ class UserCreationForm(UserCreationForm):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'type' : "text",
-                'id' : "last_name",
-                'placeholder' : "Apellido"
+                'type': "text",
+                'id': "last_name",
+                'placeholder': "Apellido",
+                'autocomplete': "off"
             }
         )
     )
@@ -68,9 +76,10 @@ class UserCreationForm(UserCreationForm):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'type' : "email",
-                'id' : "email",
-                'placeholder' : "Correo Electronico"
+                'type': "email",
+                'id': "email",
+                'placeholder': "Correo Electronico",
+                'autocomplete': "off"
             }
         )
     )
@@ -79,9 +88,10 @@ class UserCreationForm(UserCreationForm):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'type' : "password",
-                'id' : "password1",
-                'placeholder' : "Contraseña"
+                'type': "password",
+                'id': "password1",
+                'placeholder': "Contraseña",
+                'autocomplete': "off"
             }
         )
     )
@@ -90,16 +100,18 @@ class UserCreationForm(UserCreationForm):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'type' : "password",
-                'id' : "password2",
-                'placeholder' : "Confirme su contraseña"
+                'type': "password",
+                'id': "password2",
+                'placeholder': "Confirme su contraseña",
+                'autocomplete': "off"
             }
         )
     )
 
     class Meta:
         model = User
-        fields = ["username", "first_name", "last_name", "email", "password1", "password2"]
+        fields = ["username", "first_name", "last_name",
+                  "email", "password1", "password2"]
 
 
 class UpdatedForm(forms.ModelForm):
@@ -107,9 +119,10 @@ class UpdatedForm(forms.ModelForm):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'type' : "text",
-                'id' : "username",
-                'placeholder' : "Nombre Usuario"
+                'type': "text",
+                'id': "username",
+                'placeholder': "Nombre Usuario",
+                'autocomplete': "off"
             }
         )
     )
@@ -118,9 +131,10 @@ class UpdatedForm(forms.ModelForm):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'type' : "text",
-                'id' : "first_name",
-                'placeholder' : "Nombre"
+                'type': "text",
+                'id': "first_name",
+                'placeholder': "Nombre",
+                'autocomplete': "off"
             }
         )
     )
@@ -129,9 +143,10 @@ class UpdatedForm(forms.ModelForm):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'type' : "text",
-                'id' : "last_name",
-                'placeholder' : "Apellido"
+                'type': "text",
+                'id': "last_name",
+                'placeholder': "Apellido",
+                'autocomplete': "off"
             }
         )
     )
@@ -140,9 +155,10 @@ class UpdatedForm(forms.ModelForm):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'type' : "email",
-                'id' : "email",
-                'placeholder' : "Correo Electronico"
+                'type': "email",
+                'id': "email",
+                'placeholder': "Correo Electronico",
+                'autocomplete': "off"
             }
         )
     )
@@ -152,18 +168,16 @@ class UpdatedForm(forms.ModelForm):
         fields = ["username", "first_name", "last_name", "email"]
 
 
-
-from usuario.models import Profile
-
 class ProfileForm(forms.ModelForm):
 
     phone_number = forms.CharField(
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'type' : "number",
-                'id' : "phone_number",
-                'placeholder' : "Numero de telefono"
+                'type': "number",
+                'id': "phone_number",
+                'placeholder': "Numero de telefono",
+                'autocomplete': "off"
             }
         )
     )
@@ -172,9 +186,10 @@ class ProfileForm(forms.ModelForm):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'type' : "text",
-                'id' : "address",
-                'placeholder' : "Direccion"
+                'type': "text",
+                'id': "address",
+                'placeholder': "Direccion",
+                'autocomplete': "off"
             }
         )
     )
@@ -183,13 +198,17 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ['phone_number', 'address']
 
+
 class CustomPasswordChangeForm(PasswordChangeForm):
     old_password = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'autocomplete':"off", 'type' : "password", 'placeholder': 'Contraseña actual'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'autocomplete': "off",
+                               'type': "password", 'placeholder': 'Contraseña actual'})
     )
     new_password1 = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'autocomplete':"off", 'type' : "password", 'placeholder': 'Nueva contraseña'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'autocomplete': "off",
+                               'type': "password", 'placeholder': 'Nueva contraseña'})
     )
     new_password2 = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'autocomplete':"off", 'type' : "password", 'placeholder': 'Confirmar nueva contraseña'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'autocomplete': "off",
+                               'type': "password", 'placeholder': 'Confirmar nueva contraseña'})
     )
