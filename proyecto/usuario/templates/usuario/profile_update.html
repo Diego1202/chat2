@@ -3,76 +3,93 @@
 {% block title %}Actualizar Perfil{% endblock title %}
 
 {% block content %}
+<form action="{% url 'update' %}" method="post" class="row g-3 needs-validation p-md-5 m-5 mt-0"
+    enctype="multipart/form-data">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="image-container rounded-circle overflow-hidden mx-auto">
+            <img src="{{ profile_img }}" alt="profile-image" class="profile-image">
+        </div>
+    </div>
     
-    <form action="{% url 'update' %}" method="post" class="row g-3 needs-validation p-md-5 m-5">
     <h3 class="text-center">Actualizar perfil</h3>
-        {% csrf_token %}
-        <div class="col-md-4">
-            <label for="validationUsername" class="form-label">Username:</label>
-            {{ user_form.username }}
-            
-            {% if user_form.username.errors %}
-                <div class="invalid-feedback">
-                {{ user_form.username.errors.0 }}
-            </div>
-            {% endif %}
-        </div>
-        <div class="col-md-4">
-            <label for="validationUsername" class="form-label">Nombre:</label>
-            {{ user_form.first_name }}
-            
-            {% if user_form.first_name.errors %}
-                <div class="invalid-feedback">
-                {{ user_form.first_name.errors.0 }}
-            </div>
-            {% endif %}
-        </div>
-        <div class="col-md-4">
-            <label for="validationUsername" class="form-label">Apellido:</label>
-            {{ user_form.last_name }}
-            
-            {% if user_form.last_name.errors %}
-                <div class="invalid-feedback">
-                {{ user_form.last_name.errors.0 }}
-            </div>
-            {% endif %}
-        </div>
-        
-        <div class="col-md-6">
-            <label for="validationUsername" class="form-label">Correo:</label>
-            {{ user_form.email }}
-            
-            {% if user_form.email.errors %}
-                <div class="invalid-feedback">
-                {{ user_form.email.errors.0 }}
-            </div>
-            {% endif %}
-        </div>
-        
+    {% csrf_token %}
+    <div class="col-md-4">
+        <label for="validationUsername" class="form-label">Username:</label>
+        {{ user_form.username }}
 
-        <div class="col-md-6">
-            <label for="password1" class="form-label">Numero de telefono:</label>
-            {{ profile_form.phone_number }}
-            {% if profile_form.phone_number.errors %}
-                <div class="invalid-feedback">
-                {{ profile_form.phone_number.errors.0 }}
-            </div>
-            {% endif %}
+        {% if user_form.username.errors %}
+        <div class="invalid-feedback">
+            {{ user_form.username.errors.0 }}
         </div>
+        {% endif %}
+    </div>
+    <div class="col-md-4">
+        <label for="validationUsername" class="form-label">Nombre:</label>
+        {{ user_form.first_name }}
 
-        <div class="col-md-12">
-            <label for="password1" class="form-label">Direccion:</label>
-            {{ profile_form.address }}
-            {% if profile_form.address.errors %}
-                <div class="invalid-feedback">
-                {{ profile_form.address.errors.0 }}
+        {% if user_form.first_name.errors %}
+        <div class="invalid-feedback">
+            {{ user_form.first_name.errors.0 }}
+        </div>
+        {% endif %}
+    </div>
+    <div class="col-md-4">
+        <label for="validationUsername" class="form-label">Apellido:</label>
+        {{ user_form.last_name }}
+
+        {% if user_form.last_name.errors %}
+        <div class="invalid-feedback">
+            {{ user_form.last_name.errors.0 }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="col-md-6">
+        <label for="validationUsername" class="form-label">Correo:</label>
+        {{ user_form.email }}
+
+        {% if user_form.email.errors %}
+        <div class="invalid-feedback">
+            {{ user_form.email.errors.0 }}
+        </div>
+        {% endif %}
+    </div>
+
+
+    <div class="col-md-6">
+        <label for="password1" class="form-label">Numero de telefono:</label>
+        {{ profile_form.phone_number }}
+        {% if profile_form.phone_number.errors %}
+        <div class="invalid-feedback">
+            {{ profile_form.phone_number.errors.0 }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="col-md-12">
+        <label for="password1" class="form-label">Direccion:</label>
+        {{ profile_form.address }}
+        {% if profile_form.address.errors %}
+        <div class="invalid-feedback">
+            {{ profile_form.address.errors.0 }}
+        </div>
+        {% endif %}
+    </div>
+    <div class="col-md-12">
+        <label for="id_image" class="form-label mb-0">Imagen:</label>
+        <div class="">
+            {{ profile_form.image }}
+            {% if profile_form.image.errors %}
+            <div class="invalid-feedback">
+                {{ profile_form.image.errors.0 }}
             </div>
             {% endif %}
         </div>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-            <button type="submit" class="btn btn-success" id="button">Actualizar</button>
-            <a href="{% url 'home' %}" class="btn btn-outline-secondary" role="button">Regresar</a>
-          </div>
-        
-    </form>
-    {% endblock content %}
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+        <button type="submit" class="btn btn-success" id="button">Actualizar</button>
+        <a href="{% url 'home' %}" class="btn btn-outline-secondary" role="button">Regresar</a>
+    </div>
+
+</form>
+{% endblock content %}

@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from usuario import views, context_processors
+from django.conf import settings
+from django.conf.urls.static import static
 
 handler404 = 'usuario.views.error_404'
 
@@ -32,3 +34,6 @@ urlpatterns = [
     path('json/<str:username>/', views.message_json, name='chatJson'),
     path('auth/pasword-change/', views.change_password, name='password_change'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

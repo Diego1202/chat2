@@ -19,13 +19,15 @@
 
 <form class="row chat-form" method="post">
     {% csrf_token %}
-    <div class="col-md-10 col-9">
-        <input name="content" type="text" id="content" class="form-control" autocomplete="off" placeholder="Escribe tu mensaje" />
+    <div class="col-md-10 col-sm-9">
+        <input name="content" type="text" id="content" class="form-control" onkeyup="validateInput()" autocomplete="off"
+            placeholder="Escribe tu mensaje" />
     </div>
-    <div class="col-md-2 col-3 enviar" >
-        <button class="btn btn-primary btn-block" id="button"><i class="bi bi-send"></i></button>
+    <div class="col-md-2 col-sm-3 enviar">
+        <button class="btn btn-primary btn-block" id="button" disabled><i class="bi bi-send"></i></button>
     </div>
 </form>
+
 
 {% endblock mensaje %}
 {% block js %}
@@ -49,14 +51,14 @@
                     } else {
                         messageHtml += '<div class="feedback-enviado"> Enviado a ' + message.timestamp + '</div>';
                     }
-                    messageHtml += '</span>&nbsp;&nbsp;<img src="https://www.hotelbooqi.com/wp-content/uploads/2021/12/128-1280406_view-user-icon-png-user-circle-icon-png.png" alt="Logo" class="d-inline-block align-text-top">';
+                    messageHtml += '</span>&nbsp;&nbsp;<img class="img" src="'+message.sender_image+'" alt="Logo" class="d-inline-block align-text-top">';
                     if (message.is_online) {
                         messageHtml += '<span class="espacio"></span>&nbsp;';
                     } else {
                         messageHtml += '<span class="espacio"></span>&nbsp;';
                     }
                 } else {
-                    messageHtml += '<span class="span-emisor"><div class="position-relative imagen2"><img src="https://www.hotelbooqi.com/wp-content/uploads/2021/12/128-1280406_view-user-icon-png-user-circle-icon-png.png" alt="Logo" class="d-inline-block align-text-top">';
+                    messageHtml += '<span class="span-emisor"><div class="position-relative imagen2"><img class="img" src="'+message.sender_image+'" alt="Logo" class="d-inline-block align-text-top">';
                     if (message.is_online) {
                         messageHtml += '<span class="espacio"></span>&nbsp;';
                     } else {
@@ -77,32 +79,31 @@
             url: '/json/perfiles/',
             dataType: 'json',
             success: function (data) {
-                console.log('{{request.resolver_match.kwargs.username}}')
                 var profiles = data.profiles;
                 var html = '';
                 for (var i = 0; i < profiles.length; i++) {
                     var profile = profiles[i];
                     var username = profile.username;
                     html += '<a class="btn btn-link position-relative ';
-                    if ('{{request.resolver_match.kwargs.username}}' === username){
+                    if ('{{request.resolver_match.kwargs.username}}' === username) {
                         html += 'active-chat ';
                     }
-                    html += 'imagen3" id="imagen3" href="{% url "chat" %}'+profile.username;
+                    html += 'imagen3" id="imagen3" href="{% url "chat" %}' + profile.username;
                     html += '"><div class="left-content">';
-                    html += '<img src="https://www.hotelbooqi.com/wp-content/uploads/2021/12/128-1280406_view-user-icon-png-user-circle-icon-png.png" alt="Logo" class="d-inline-block align-text-top">';
+                    html += '<img class="img" src="' + profile.image + '" alt="imagen" class="d-inline-block align-text-top">';
                     if (profile.is_online) {
-                        html += '<span class="activo"></span>&nbsp;&nbsp;'+profile.username;
+                        html += '<span class="activo"></span>&nbsp;&nbsp;' + profile.username;
                     } else {
-                        html += '&nbsp;' +profile.username;
+                        html += '&nbsp;' + profile.username;
                     }
                     html += '</div>';
                     html += '<div class="right-content">';
                     if (!profile.is_online) {
-                        html += '<span class="inactivo">'+profile.last_logout;
+                        html += '<span class="inactivo">' + profile.last_logout;
                         html += '</span>';
                     }
                     if (profile.has_unread_messages) {
-                        html += '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">'+profile.count+'</span>';
+                        html += '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">' + profile.count + '</span>';
                     }
                     html += '</div>';
                     html += '</a>';
@@ -116,9 +117,7 @@
 
     $(document).ready(function () {
         updateProfiles();
-        setInterval(updateProfiles, 2500);
+        setInterval(updateProfiles, 400);
     });
-
-
 </script>
 {% endblock js %}

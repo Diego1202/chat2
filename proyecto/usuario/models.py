@@ -7,6 +7,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=20, blank=True, validators=[MinLengthValidator(10)])
     address = models.CharField(max_length=255, blank=True)
+    image = models.ImageField(upload_to='profiles/', default='profiles/default_profile_image.png')
     is_online = models.BooleanField(default=False)
     last_logout = models.DateTimeField(null=True, blank=True)
 

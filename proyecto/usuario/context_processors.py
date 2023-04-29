@@ -20,6 +20,7 @@ def profiles_with_messages(request):
         if profile.user.id != request.user.id:
             data = {
                 'username': profile.user.username,
+                'image': profile.image.url,
                 'is_online': profile.is_online,
                 'last_logout': tiempo_transcurrido(profile.last_logout),
                 'has_unread_messages': profile.sender_messages.filter(is_read=False).exists(),

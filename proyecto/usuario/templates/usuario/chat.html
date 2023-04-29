@@ -41,7 +41,7 @@
                     }
                     html += 'imagen3" id="imagen3" href="{% url "chat" %}'+profile.username;
                     html += '"><div class="left-content">';
-                    html += '<img src="https://www.hotelbooqi.com/wp-content/uploads/2021/12/128-1280406_view-user-icon-png-user-circle-icon-png.png" alt="Logo" class="d-inline-block align-text-top">';
+                    html += '<img src="'+profile.image+'" class="img" alt="imagen" class="d-inline-block align-text-top">';
                     if (profile.is_online) {
                         html += '<span class="activo"></span>&nbsp;&nbsp;'+profile.username;
                     } else {

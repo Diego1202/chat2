@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.forms import PasswordChangeForm
-
+from django.forms.widgets import ClearableFileInput
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
@@ -194,9 +194,16 @@ class ProfileForm(forms.ModelForm):
         )
     )
 
+    image = forms.ImageField(
+        widget=ClearableFileInput(attrs={
+            'class': 'form-control'
+        }),
+        required=False
+    )
+
     class Meta:
         model = Profile
-        fields = ['phone_number', 'address']
+        fields = ['phone_number', 'address', 'image']
 
 
 class CustomPasswordChangeForm(PasswordChangeForm):

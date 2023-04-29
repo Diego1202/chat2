@@ -47,13 +47,14 @@ def login_view(request):
 def profile_update(request):
     profile = request.user.profile
     user = User.objects.get(id=request.user.id)
-    profile_form = ProfileForm(request.POST or None, instance=profile)
-    user_form = UpdatedForm(request.POST or None, instance=user)
+    imagen = get_object_or_404(Profile, pk=user.id)
+    profile_form = ProfileForm(request.POST or None, request.FILES or None, instance=profile)
+    user_form = UpdatedForm(request.POST or None, request.FILES or None, instance=user)
     if profile_form.is_valid() and user_form.is_valid():
         profile_form.save()
         user_form.save()
         return redirect('home')
-    return render(request, 'usuario/profile_update.html', {'profile_form': profile_form, 'user_form': user_form})
+    return render(request, 'usuario/profile_update.html', {'profile_form': profile_form, 'user_form': user_form, 'profile_img':imagen.image.url})
 
 class logout(LogoutView):
     next_page='login'
@@ -122,7 +123,9 @@ def message_json(request, username):
         for message in messages:
             message_data = {
                 'sender': message.sender.user.username,
+                'sender_image': message.sender.image.url,
                 'receiver': message.receiver.user.username,
+                'receiver_image': message.receiver.image.url,
                 'is_online': message.sender.is_online,
                 'content': message.content,
                 'timestamp': message.timestamp.strftime("%I:%M %p").lower(),
