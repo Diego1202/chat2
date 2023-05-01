@@ -1,7 +1,7 @@
 """proyecto URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.0/topics/http/urls/
+    https://docs.djangoproject.com/en/3.2/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -33,7 +33,4 @@ urlpatterns = [
     path('chat/<str:username>/', views.message_view, name='chat-user'),
     path('json/<str:username>/', views.message_json, name='chatJson'),
     path('auth/pasword-change/', views.change_password, name='password_change'),
-]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
