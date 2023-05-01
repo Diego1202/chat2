@@ -1,3 +1,6 @@
+import os
+
+from django.conf import settings
 from django.views.decorators.debug import sensitive_post_parameters
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from .forms import UserCreationForm, LoginForm, ProfileForm, UpdatedForm, CustomPasswordChangeForm
@@ -48,13 +51,27 @@ def profile_update(request):
     profile = request.user.profile
     user = User.objects.get(id=request.user.id)
     imagen = get_object_or_404(Profile, pk=user.id)
-    profile_form = ProfileForm(request.POST or None, request.FILES or None, instance=profile)
-    user_form = UpdatedForm(request.POST or None, request.FILES or None, instance=user)
-    if profile_form.is_valid() and user_form.is_valid():
-        profile_form.save()
-        user_form.save()
-        return redirect('home')
-    return render(request, 'usuario/profile_update.html', {'profile_form': profile_form, 'user_form': user_form, 'profile_img':imagen.image.url})
+    if request.method == 'POST':
+        profile_form = ProfileForm(request.POST, request.FILES, instance=profile)
+        user_form = UpdatedForm(request.POST, request.FILES, instance=user)
+        if profile_form.is_valid() and user_form.is_valid():
+            profile_user = profile_form.save(commit=False)
+
+            # Eliminar la imagen anterior si se proporciona una nueva imagen
+            if profile_form.cleaned_data.get('image') and imagen.image.name!="profiles/default_profile_image.png":
+                # Obtener la ruta de la imagen anterior
+                old_image_path = os.path.join(settings.MEDIA_ROOT, imagen.image.name)
+
+                # Eliminar la imagen anterior si existe
+                if os.path.isfile(old_image_path):
+                    os.remove(old_image_path)
+            profile_user.save()
+            user_form.save()
+            return redirect('home')
+    else:
+        profile_form = ProfileForm(instance=profile)
+        user_form = UpdatedForm(instance=user)
+    return render(request, 'usuario/profile_update.html', {'profile_form': profile_form, 'user_form': user_form, 'profile_img': imagen.image.url})
 
 class logout(LogoutView):
     next_page='login'
